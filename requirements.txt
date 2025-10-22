@@ -1,6 +1,15 @@
-flask==2.3.3
+# Core Web Framework and Server
+flask==3.0.0
+gunicorn==21.2.0
 flask-cors==4.0.0
+
+# API and Data Handling
 requests==2.31.0
-python-dotenv==1.0.0
 huggingface_hub==0.20.3
-gunicorn
+python-dotenv==1.0.0
+numpy==1.26.2
+
+# Advanced Evaluation Libraries
+evaluate==0.4.1
+datasets==2.15.0
+spacy==3.7.2
