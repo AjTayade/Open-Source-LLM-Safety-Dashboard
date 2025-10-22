@@ -1,10 +1,10 @@
-Core Web Framework and Server
+#Core Web Framework and Server
 
 flask==3.0.0
 gunicorn==21.2.0
 flask-cors==4.0.0
 
-API and Data Handling
+#API and Data Handling
 
 requests==2.31.0
 huggingface_hub==0.20.3
