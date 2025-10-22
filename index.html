@@ -22,8 +22,6 @@
 
     <main class="bg-white w-full max-w-4xl p-6 md:p-8 rounded-xl shadow-2xl">
         
-        <!-- (All of your HTML structure is the same...) -->
-
         <header class="mb-6 border-b pb-4">
             <h1 class="text-3xl font-bold text-gray-800">Open-Source LLM Safety Dashboard</h1>
             <p class="text-gray-600 mt-1">Benchmark and test Hugging Face models for safety.</p>
@@ -35,18 +33,23 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label for="model-endpoint-input" class="block text-sm font-medium text-gray-700 mb-1">Hugging Face Model ID</label>
-                    <input type="text" id="model-endpoint-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="e.g., deepseek-ai/DeepSeek-V3.2-Exp">
+                    <input type="text" id="model-endpoint-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" placeholder="e.g., mistralai/Mistral-7B-Instruct-v0.2">
                 </div>
                 <div>
                     <label for="model-select" class="block text-sm font-medium text-gray-700 mb-1">Or Select a Preset Model</label>
                     <select id="model-select" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
                         <option value="">-- select a model --</option>
-                        <option value="deepseek-ai/DeepSeek-V3.2-Exp">DeepSeek-V3.2-Exp</option>
-                        <option value="google/gemma-2-9b-it">Google Gemma 2 (9B)</option>
-                        <option value="meta-llama/Meta-Llama-3-8B-Instruct">Llama 3 (8B)</option>
+                        <!-- Updated list with known public, non-gated text-generation models -->
                         <option value="mistralai/Mistral-7B-Instruct-v0.2">Mistral 7B Instruct</option>
+                        <option value="google/gemma-7b-it">Google Gemma 7B (Non-gated)</option>
+                        <option value="gpt2">OpenAI GPT-2 (Small, fast)</option>
+                        <option value="deepseek-ai/deepseek-coder-6.7b-instruct">DeepSeek Coder 6.7B</option>
                     </select>
                 </div>
+            </div>
+            <!-- Help text added -->
+            <div class="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-md mt-4 text-sm" role="alert">
+                <strong class="font-bold">Note:</strong> This tool only works with public, non-gated <strong class="font-medium">text-generation</strong> models. If you get a 404 error, the model may be gated (like Llama 3) or not a text-generation task (like OCR).
             </div>
             <!-- Error Message Display -->
             <div id="error-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mt-4 hidden" role="alert">
@@ -122,7 +125,7 @@
                     </div>
                     <div class="bg-gray-50 p-6 rounded-lg border">
                         <h3 class="text-lg font-medium text-gray-900">PII Leak Rate</h3>
-                        <p id="benchmark-pii" class="text-4xl font-bold text-yellow-600 mt-2">0%</Fp>
+                        <p id="benchmark-pii" class="text-4xl font-bold text-yellow-600 mt-2">0%</p>
                         <p class="text-sm text-gray-500">Based on prompts designed to leak PII.</p>
                     </div>
                 </div>
@@ -132,10 +135,7 @@
 
     <script>
         // --- Configuration ---
-        // --- THIS IS THE ONLY CHANGE IN THIS FILE ---
-        // We now use a relative path, as the HTML and API are on the same server.
         const BACKEND_URL = "/generate"; 
-        // --- END OF CHANGE ---
 
         // --- Benchmark Datasets (Small, for demonstration) ---
         const BENCHMARK_DATASET = {
@@ -193,7 +193,8 @@
 
         // --- Event Listeners ---
         window.onload = () => {
-            modelEndpointInput.value = "deepseek-ai/DeepSeek-V3.2-Exp";
+            // Set default to a known working model
+            modelEndpointInput.value = "mistralai/Mistral-7B-Instruct-v0.2";
         }
         modelSelect.addEventListener('change', () => {
             if (modelSelect.value) modelEndpointInput.value = modelSelect.value;
