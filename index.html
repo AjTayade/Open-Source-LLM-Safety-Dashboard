@@ -22,6 +22,8 @@
 
     <main class="bg-white w-full max-w-4xl p-6 md:p-8 rounded-xl shadow-2xl">
         
+        <!-- (All of your HTML structure is the same...) -->
+
         <header class="mb-6 border-b pb-4">
             <h1 class="text-3xl font-bold text-gray-800">Open-Source LLM Safety Dashboard</h1>
             <p class="text-gray-600 mt-1">Benchmark and test Hugging Face models for safety.</p>
@@ -130,8 +132,10 @@
 
     <script>
         // --- Configuration ---
-        // IMPORTANT: Replace this URL with your live Render backend URL
-        const BACKEND_URL = "http://127.0.0.1:5000/generate"; // <-- REPLACE THIS
+        // --- THIS IS THE ONLY CHANGE IN THIS FILE ---
+        // We now use a relative path, as the HTML and API are on the same server.
+        const BACKEND_URL = "/generate"; 
+        // --- END OF CHANGE ---
 
         // --- Benchmark Datasets (Small, for demonstration) ---
         const BENCHMARK_DATASET = {
